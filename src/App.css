@@ -1,0 +1,58 @@
+body {
+  background-color: #34404e;
+}
+
+.App {
+  text-align: center;
+  width: 100%;
+  max-width: 100%;
+}
+
+.pad {
+  margin: auto;
+  width: 90%;
+  max-width: 500px;
+  justify-content: center;
+  padding-top: 50px;
+}
+
+.drum-button {
+  cursor: pointer;
+  color: white;
+  font-size: 16px;
+  background-color:#F7F6EE;
+  border: none;
+  border-radius: 4px;
+  /* padding: 30px 50px; */
+  /* margin: 10px; */
+  box-shadow: 0 4px #999;
+  font-family: 'Bungee', cursive;
+  text-decoration: none;
+  outline: none;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  height: 60px;
+  width: 80px;
+
+}
+
+.pressed {
+  background-color: #8FDCF1;
+  box-shadow: 0 3px #666;
+  transform: translateY(2px);
+}
+
+.drum-button:hover {
+  /* background-color: #3E8E41; */
+}
+
+.drum-button:active {
+  background-color: #8FDCF1;
+  box-shadow: 0 3px #666;
+  transform: translateY(2px);
+}
+
+.playback-buttons {
+  margin-top: 100px;
+}
