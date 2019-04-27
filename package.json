@@ -1,16 +1,20 @@
 {
-  "name": "drum-kit",
+  "name": "web-synth",
+  "homepage": "https://wsbuck.github.io/web-synth",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@magenta/music": "^1.8.0",
     "@material-ui/core": "^3.9.3",
+    "gh-pages": "^2.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.0",
     "tone": "^13.4.9"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

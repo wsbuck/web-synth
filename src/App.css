@@ -43,15 +43,15 @@ body {
   transform: translateY(2px);
 }
 
-.drum-button:hover {
-  /* background-color: #3E8E41; */
-}
+/* .drum-button:hover {
+  background-color: #3E8E41;
+} */
 
-.drum-button:active {
+/* .drum-button:active {
   background-color: #8FDCF1;
   box-shadow: 0 3px #666;
   transform: translateY(2px);
-}
+} */
 
 .playback-buttons {
   margin-top: 100px;
