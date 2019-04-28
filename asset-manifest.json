@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/drum-kit/static/css/main.6e73a989.chunk.css",
-    "main.js": "/drum-kit/static/js/main.235a5045.chunk.js",
-    "main.js.map": "/drum-kit/static/js/main.235a5045.chunk.js.map",
-    "runtime~main.js": "/drum-kit/static/js/runtime~main.3ae46f20.js",
-    "runtime~main.js.map": "/drum-kit/static/js/runtime~main.3ae46f20.js.map",
-    "static/js/2.6fc880a1.chunk.js": "/drum-kit/static/js/2.6fc880a1.chunk.js",
-    "static/js/2.6fc880a1.chunk.js.map": "/drum-kit/static/js/2.6fc880a1.chunk.js.map",
-    "index.html": "/drum-kit/index.html",
-    "precache-manifest.e02916e24d57b982c57a78df7915d7d2.js": "/drum-kit/precache-manifest.e02916e24d57b982c57a78df7915d7d2.js",
-    "service-worker.js": "/drum-kit/service-worker.js",
-    "static/css/main.6e73a989.chunk.css.map": "/drum-kit/static/css/main.6e73a989.chunk.css.map",
-    "static/media/logo.svg": "/drum-kit/static/media/logo.5d5d9eef.svg"
+    "main.css": "/web-synth/static/css/main.f23a7f01.chunk.css",
+    "main.js": "/web-synth/static/js/main.6414f8c0.chunk.js",
+    "main.js.map": "/web-synth/static/js/main.6414f8c0.chunk.js.map",
+    "runtime~main.js": "/web-synth/static/js/runtime~main.1797bbe7.js",
+    "runtime~main.js.map": "/web-synth/static/js/runtime~main.1797bbe7.js.map",
+    "static/js/2.5af18686.chunk.js": "/web-synth/static/js/2.5af18686.chunk.js",
+    "static/js/2.5af18686.chunk.js.map": "/web-synth/static/js/2.5af18686.chunk.js.map",
+    "index.html": "/web-synth/index.html",
+    "precache-manifest.6be11a1b028c4902fd1ef9559e1ee870.js": "/web-synth/precache-manifest.6be11a1b028c4902fd1ef9559e1ee870.js",
+    "service-worker.js": "/web-synth/service-worker.js",
+    "static/css/main.f23a7f01.chunk.css.map": "/web-synth/static/css/main.f23a7f01.chunk.css.map",
+    "static/media/logo.svg": "/web-synth/static/media/logo.5d5d9eef.svg"
   }
 }
