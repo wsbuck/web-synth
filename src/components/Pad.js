@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 
 import Grid from '@material-ui/core/Grid';
+// import Slider from '@material-ui/lab/Slider';
 
-import * as Tone from 'tone';
+// import * as Tone from 'tone';
 
 import SynthButton from './SynthButton';
-import PlayButton from './PlayButton';
-import PlaybackButton from './PlaybackButton';
+// import PlayButton from './PlayButton';
+// import PlaybackButton from './PlaybackButton';
 
 class Pad extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sequence: []
+      sequence: [],
+      octave: 3,
     };
     this.returnNote = this.returnNote.bind(this);
   }
@@ -44,77 +46,36 @@ class Pad extends Component {
   }
 
   render() {
-    let sm = 2;
+    const sm = 2;
+    const octave = this.state.octave;
+    let notes = [
+      'C', 'C#', 'D', 'D#', 'E', 'F',
+     'F#', 'G', 'G#', 'A', 'A#', 'B'
+    ];
+
+    notes = notes.map(note => note + octave);
+
     return (
       <div className="pad">
-        <div className="play-button">
-          <Grid container spacing={24} justify="center">
-            <Grid item sm={sm}>
+        <Grid container spacing={24} justify="center">
+          {notes.map((value, index) => (
+            <Grid item sm={sm} key={index}>
               <SynthButton
-                pitch={'A5'}
+                pitch={value}
                 returnNote={this.returnNote}
-                envelope={this.envelope}
+                evelope={this.envelope}
               />
             </Grid>
-            <Grid item sm={sm}>
-              <SynthButton
-                pitch={'B5'}
-                returnNote={this.returnNote}
-                envelope={this.envelope}
-              />
-            </Grid>
-            <Grid item sm={sm}>
-              <SynthButton
-                pitch={'C5'}
-                returnNote={this.returnNote}
-                envelope={this.envelope}
-              />
-            </Grid>
-            <Grid item sm={sm}>
-              <SynthButton
-                pitch={'D5'}
-                returnNote={this.returnNote}
-                envelope={this.envelope}
-              />
-            </Grid>
-            <Grid item sm={sm}>
-              <SynthButton
-                pitch={'E5'}
-                returnNote={this.returnNote}
-                envelope={this.envelope}
-              />
-            </Grid>
-            <Grid item sm={sm}>
-              <SynthButton
-                pitch={'F5'}
-                returnNote={this.returnNote}
-                envelope={this.envelope}
-              />
-            </Grid>
-            <Grid item sm={sm}>
-              <SynthButton
-                pitch={'G5'}
-                returnNote={this.returnNote}
-                envelope={this.envelope}
-              />
-            </Grid>
-            <Grid item sm={sm}>
-              <SynthButton
-                pitch={'A6'}
-                returnNote={this.returnNote}
-                envelope={this.envelope}
-              />
-            </Grid>
-          </Grid>
-        </div>
-
-        <div className="playback-buttons">
-          <Grid container spacing={24} justify="center">
-            {/* <PlayButton /> */}
-            <PlaybackButton />
-          </Grid>
-        </div>
+          ))}
+        </Grid>
       </div>
+
+      // <div className="playback-buttons">
+      //   <Grid container spacing={24} justify="center">
+      //     {/* <PlayButton /> */}
+      //     <PlaybackButton />
+      //   </Grid>
+      // </div>
     )
   }
 }

@@ -10,14 +10,17 @@ class SynthButton extends Component {
     this.state = {
       pressed: false,
     };
-    // this.synth = new Tone.AMSynth().toMaster();
-    this.synth = new Tone.Synth().toMaster();
     this.playSynth = this.playSynth.bind(this);
     this.stopSynth = this.stopSynth.bind(this);
     this.checkMouseDown = this.checkMouseDown.bind(this);
     this.touchMove = this.touchMove.bind(this);
-    this.startTime = null;
+  }
 
+  componentWillMount() {
+    this.synth = new Tone.Synth({
+      envelope: this.props.envelope 
+    }).toMaster();
+    this.startTime = null;
   }
 
   playSynth(e) {
