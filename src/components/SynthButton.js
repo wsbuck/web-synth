@@ -18,28 +18,39 @@ class SynthButton extends Component {
 
   componentWillMount() {
     this.synth = new Tone.Synth({
-      envelope: this.props.envelope 
+      envelope: this.props.envelope
     }).toMaster();
     this.startTime = null;
+    // console.log(Tone.Frequency('C4').toNote())
+    // console.log(Tone.Frequency('C4').toFrequency())
+    // console.log(Tone.Frequency('C4').toMidi())
   }
 
   playSynth(e) {
     e.preventDefault();
     // console.log('play note');
     this.setState({ pressed: true });
-    this.synth.triggerAttack(this.props.pitch);
+    this.synth.triggerAttack(this.props.note);
     this.startTime = Tone.context.currentTime.toFixed(2)
+    // this.startTime = Tone.Transport.seconds.toFixed(2);
   }
 
   stopSynth(e) {
     e.preventDefault();
     this.setState({ pressed: false });
     this.synth.triggerRelease();
-    if (this.startTime !== null) {
+
+    let timeLength = (
+      Tone.context.currentTime.toFixed(2) - this.startTime
+    ).toFixed(2);
+    if (this.startTime !== null && this.props.recording) {
       this.props.returnNote({
-        pitch: this.props.pitch,
-        startTime: this.startTime,
-        endtime: Tone.context.currentTime.toFixed(2)
+        note: this.props.note,
+        midi: Tone.Frequency(this.props.note).toMidi(),
+        length: timeLength,
+        // startTime: this.startTime,
+        // endTime: Tone.context.currentTime.toFixed(2)
+        // endTime: Tone.Transport.seconds.toFixed(2)
       });
     }
     this.startTime = null;
@@ -55,7 +66,7 @@ class SynthButton extends Component {
 
   touchMove(e) {
     console.log(e);
-    console.log(this.props.pitch);
+    // console.log(this.props.pitch);
     this.setState({ pressed: true });
   }
 
@@ -69,7 +80,7 @@ class SynthButton extends Component {
           onTouchEnd={(e) => this.stopSynth(e)}
           onMouseEnter={(e) => this.checkMouseDown(e)}
           onMouseLeave={(e) => this.stopSynth(e)}
-          className={this.state.pressed ? "drum-button pressed" : "drum-button"}
+          className={this.state.pressed ? "synth-button pressed" : "synth-button"}
         />
       </div>
     )
