@@ -17,9 +17,10 @@ class SynthButton extends Component {
   }
 
   componentWillMount() {
-    this.synth = new Tone.Synth({
+    this.synth = new Tone.FMSynth({
       envelope: this.props.envelope
     }).toMaster();
+    // this.synth = new CustomPlayer();
     this.startTime = null;
     // console.log(Tone.Frequency('C4').toNote())
     // console.log(Tone.Frequency('C4').toFrequency())

@@ -6,6 +6,7 @@ body {
   text-align: center;
   width: 100%;
   max-width: 100%;
+  margin: auto;
 }
 
 .pad {
@@ -34,6 +35,9 @@ body {
   height: 60px;
   width: 80px;
 
+  text-align: center;
+  padding: 0px;
+
 }
 
 .pressed {
@@ -54,6 +58,20 @@ body {
 
 .playback-buttons {
   margin-top: 100px;
+  margin: auto;
+  max-width: 500px;
+  justify-content: center;
+  padding-top: 50px;
+  width: 90%;
+}
+
+.canvas-container {
+  position: fixed;
+  bottom: 20px;
+  width:  90%;
+  margin: auto;
+  left: 50%;
+  transform: translate(-50%, 0%);
 }
 
 .blink_text > * {

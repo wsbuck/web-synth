@@ -11,6 +11,10 @@ import SynthButton from './SynthButton';
 import PlaybackButton from './PlaybackButton';
 import RecordButton from './RecordButton';
 
+import CustomPlayer from '../Magenta/CustomPlayer';
+
+import { AddToQueue } from '@material-ui/icons';
+
 class Pad extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +26,8 @@ class Pad extends Component {
       recording: false,
       playing: false,
     };
-    this.player = new mm.Player();
+    // this.player = new mm.Player();
+    this.player = new CustomPlayer();
 
     this.returnNote = this.returnNote.bind(this);
     this.isRecording = this.isRecording.bind(this);
@@ -32,27 +37,54 @@ class Pad extends Component {
   }
 
   componentWillMount() {
-    this.envelope = {
-      attack: 0.01,
-      decay: 0.1,
-      sustain: 0.5,
-      release: 1.0,
-      attackCurve: "linear",
-      decayCurve: "exponential",
-      releaseCurve: "exponential"
-    };
-    this.synth = new Tone.Synth({
-      envelope: this.envelope
-    }).toMaster();
+    this.player = new CustomPlayer();
+    // this.envelope = {
+    //   attack: 0.01,
+    //   decay: 0.1,
+    //   sustain: 0.5,
+    //   release: 1.0,
+    //   attackCurve: "linear",
+    //   decayCurve: "exponential",
+    //   releaseCurve: "exponential"
+    // };
+    this.envelope = {};
+    // this.synth = new Tone.FMSynth({
+    //   envelope: this.envelope
+    // }).toMaster();
 
   }
 
-  isRecording(bool) {
+  async isRecording(bool) {
     this.setState({ recording: bool });
     Tone.Transport.toggle()
     if (!bool) {
-      this.quantizeNotes();
+      await this.quantizeNotes();
+      this.setupPlayer();
     }
+  }
+
+  setupPlayer() {
+    const config = {
+      noteHeight: 6,
+      pixelsPerTimeStep: 30,  // like a note width
+      noteSpacing: 1,
+      noteRGB: '245, 245, 245',
+      activeNoteRGB: '240, 84, 119',
+    }
+    this.viz = new mm.Visualizer(
+      // this.state.unqSequence,
+      this.state.unqSequence,
+      document.getElementById('canvas'),
+      config);
+
+    // this.player = new mm.Player(false, {
+    //   run: (note) => this.viz.redraw(note),
+    //   stop: () => {this.setState({ playing: false });}
+    // });
+    this.player = new CustomPlayer(false, {
+      run: (note) => this.viz.redraw(note),
+      stop: () => { this.setState({ playing: false }); }
+    });
   }
 
   isPlaying() {
@@ -67,8 +99,9 @@ class Pad extends Component {
       this.player.stop();
       this.setState({ playing: false });
     } else {
-      this.player.start(this.state.unqSequence)
-        .then(() => this.setState({ playing: false }));
+      this.player.start(this.state.unqSequence);
+      // this.player.start(this.state.unqSequence)
+      //   .then(() => this.setState({ playing: false }));
     }
   }
 
@@ -85,7 +118,7 @@ class Pad extends Component {
     this.setState({ sequence: sequence });
   }
 
-  quantizeNotes() {
+  async quantizeNotes() {
     let { sequence } = this.state;
     const unquantizedSequence = {
       notes: sequence,
@@ -95,6 +128,15 @@ class Pad extends Component {
     this.setState({ qSequence: qns, unqSequence: unquantizedSequence });
   }
 
+  musicRNN() {
+    const music_rnn = new mm.MusicRNN('https://storage.googleapis.com/magentadata/js/checkpoints/music_rnn/basic_rnn');
+    music_rnn.initialize();
+    music_rnn.continueSequence(this.state.qSequence, 20, 1.5)
+      .then((sample) => this.player.start(sample));
+    // const qns = mm.sequences.quantizeNoteSequence(ORIGINAL_TWINKLE_TWINKLE, 4);
+
+  }
+
   render() {
     const sm = 2;
     const octave = this.state.octave;
@@ -102,7 +144,6 @@ class Pad extends Component {
       'C', 'C#', 'D', 'D#', 'E', 'F',
       'F#', 'G', 'G#', 'A', 'A#', 'B'
     ];
-
     notes = notes.map(note => note + octave);
 
     return (
@@ -124,15 +165,24 @@ class Pad extends Component {
 
         <div className="playback-buttons">
           <Grid container spacing={24} justify="center">
-            {/* <PlayButton /> */}
-            <Grid item sm={sm}>
+            <Grid item sm={2}>
               <PlaybackButton isPlaying={this.isPlaying} playing={this.state.playing} />
             </Grid>
-            <Grid item sm={sm}>
+            <Grid item sm={2}>
               <RecordButton isRecording={this.isRecording} />
+            </Grid>
+            <Grid item sm={2}>
+              <button className="synth-button" onClick={() => this.musicRNN()}>
+              <AddToQueue />
+              </button>
             </Grid>
           </Grid>
         </div>
+        <div className="canvas-container">
+          <canvas id="canvas" />
+        </div>
+
+
       </div>
     )
   }
