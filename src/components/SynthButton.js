@@ -17,8 +17,8 @@ class SynthButton extends Component {
   }
 
   componentWillMount() {
-    this.synth = new Tone.FMSynth({
-      envelope: this.props.envelope
+    this.synth = new Tone.Synth({
+      // envelope: this.props.envelope
     }).toMaster();
     // this.synth = new CustomPlayer();
     this.startTime = null;

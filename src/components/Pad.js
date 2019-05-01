@@ -12,6 +12,7 @@ import PlaybackButton from './PlaybackButton';
 import RecordButton from './RecordButton';
 
 import CustomPlayer from '../Magenta/CustomPlayer';
+// import CustomPlayer from '../Magenta/Player';
 
 import { AddToQueue } from '@material-ui/icons';
 
@@ -27,7 +28,7 @@ class Pad extends Component {
       playing: false,
     };
     // this.player = new mm.Player();
-    this.player = new CustomPlayer();
+    // this.player = new CustomPlayer();
 
     this.returnNote = this.returnNote.bind(this);
     this.isRecording = this.isRecording.bind(this);
@@ -37,7 +38,7 @@ class Pad extends Component {
   }
 
   componentWillMount() {
-    this.player = new CustomPlayer();
+    // this.player = new CustomPlayer();
     // this.envelope = {
     //   attack: 0.01,
     //   decay: 0.1,
@@ -77,14 +78,16 @@ class Pad extends Component {
       document.getElementById('canvas'),
       config);
 
-    // this.player = new mm.Player(false, {
-    //   run: (note) => this.viz.redraw(note),
-    //   stop: () => {this.setState({ playing: false });}
-    // });
-    this.player = new CustomPlayer(false, {
+    this.player = new mm.Player(false, {
       run: (note) => this.viz.redraw(note),
-      stop: () => { this.setState({ playing: false }); }
+      stop: () => {this.setState({ playing: false });}
     });
+    // this.player = new CustomPlayer(false, {
+    //   run: (note) => this.viz.redraw(note),
+    //   stop: () => { this.setState({ playing: false }); }
+    // });
+
+    // this.player = new CustomPlayer();
   }
 
   isPlaying() {
