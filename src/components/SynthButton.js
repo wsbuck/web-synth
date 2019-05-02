@@ -15,7 +15,8 @@ class SynthButton extends Component {
 
   componentWillMount() {
     this.synth = new Tone.Synth({
-      envelope: this.props.envelope
+      envelope: this.props.envelope,
+      oscillator: this.props.oscillator
     }).toMaster();
     this.startTime = null;
   }

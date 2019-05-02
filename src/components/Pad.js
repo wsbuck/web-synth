@@ -44,12 +44,13 @@ class Pad extends Component {
       releaseCurve: "exponential"
     };
     this.oscillator = {
-      type: 'triangle',
+      type: 'sawtooth',
     }
-    this.synth = new Tone.Synth({
+    this.synth = new Tone.PolySynth(6, Tone.Synth).toMaster();
+    this.synth.set({
       oscillator: this.oscillator,
       envelope: this.envelope
-    }).toMaster();
+    });
   }
 
   async isRecording(bool) {
@@ -167,6 +168,7 @@ class Pad extends Component {
                   note={value}
                   returnNote={this.returnNote}
                   evelope={this.envelope}
+                  oscillator={this.oscillator}
                   recording={this.state.recording}
                 />
               </Grid>
