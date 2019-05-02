@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
 
-// import * as Tone from 'tone';
-// import * as mm from '@magenta/music';
-
 import { FiberManualRecord } from '@material-ui/icons';
-
 
 class RecordButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
       pressed: false,
-      // recording: false,
       color: "error",
     };
   }
@@ -21,9 +16,7 @@ class RecordButton extends Component {
     this.props.isRecording(!pressed)
     this.setState({
       pressed: !pressed,
-      // recording: !this.state.recording
     });
-
   }
 
   render() {

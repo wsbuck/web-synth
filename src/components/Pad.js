@@ -7,12 +7,8 @@ import * as Tone from 'tone';
 import * as mm from '@magenta/music';
 
 import SynthButton from './SynthButton';
-// import PlayButton from './PlayButton';
 import PlaybackButton from './PlaybackButton';
 import RecordButton from './RecordButton';
-
-import CustomPlayer from '../Magenta/CustomPlayer';
-// import CustomPlayer from '../Magenta/Player';
 
 import { AddToQueue } from '@material-ui/icons';
 
@@ -38,56 +34,70 @@ class Pad extends Component {
   }
 
   componentWillMount() {
-    // this.player = new CustomPlayer();
-    // this.envelope = {
-    //   attack: 0.01,
-    //   decay: 0.1,
-    //   sustain: 0.5,
-    //   release: 1.0,
-    //   attackCurve: "linear",
-    //   decayCurve: "exponential",
-    //   releaseCurve: "exponential"
-    // };
-    this.envelope = {};
-    // this.synth = new Tone.FMSynth({
-    //   envelope: this.envelope
-    // }).toMaster();
-
+    this.envelope = {
+      attack: 0.01,
+      decay: 0.1,
+      sustain: 0.5,
+      release: 1.0,
+      attackCurve: "linear",
+      decayCurve: "exponential",
+      releaseCurve: "exponential"
+    };
+    this.oscillator = {
+      type: 'triangle',
+    }
+    this.synth = new Tone.Synth({
+      oscillator: this.oscillator,
+      envelope: this.envelope
+    }).toMaster();
   }
 
   async isRecording(bool) {
     this.setState({ recording: bool });
     Tone.Transport.toggle()
     if (!bool) {
+      // if recording has stopped then quantize notes
       await this.quantizeNotes();
       this.setupPlayer();
     }
   }
 
+  triggerSynth(note, duration) {
+    this.synth.triggerAttackRelease(note, duration);
+  }
+
   setupPlayer() {
-    const config = {
-      noteHeight: 6,
-      pixelsPerTimeStep: 30,  // like a note width
-      noteSpacing: 1,
-      noteRGB: '245, 245, 245',
-      activeNoteRGB: '240, 84, 119',
-    }
-    this.viz = new mm.Visualizer(
-      // this.state.unqSequence,
-      this.state.unqSequence,
-      document.getElementById('canvas'),
-      config);
+    // const config = {
+    //   noteHeight: 6,
+    //   pixelsPerTimeStep: 30,  // like a note width
+    //   noteSpacing: 1,
+    //   noteRGB: '245, 245, 245',
+    //   activeNoteRGB: '240, 84, 119',
+    // }
+    // this.viz = new mm.Visualizer(
+    //   this.state.unqSequence,
+    //   document.getElementById('canvas'),
+    //   config);
 
-    this.player = new mm.Player(false, {
-      run: (note) => this.viz.redraw(note),
-      stop: () => {this.setState({ playing: false });}
-    });
-    // this.player = new CustomPlayer(false, {
+    // this.player = new mm.Player(false, {
     //   run: (note) => this.viz.redraw(note),
-    //   stop: () => { this.setState({ playing: false }); }
+    //   stop: () => {this.setState({ playing: false });}
     // });
+    const { sequence } = this.state;
+    let endTime = 0.0;
 
-    // this.player = new CustomPlayer();
+
+    sequence.forEach((note) => {
+      if (note.endTime > endTime) {
+        endTime = note.endTime;
+      }
+      Tone.Transport.schedule(() => {
+        this.triggerSynth(note.note, note.duration)
+      }, note.startTime)
+    });
+
+    Tone.Transport.loopEnd = endTime + 1.0;
+    Tone.Transport.loop = true;
   }
 
   isPlaying() {
@@ -98,25 +108,24 @@ class Pad extends Component {
   }
 
   play() {
-    if (this.player.isPlaying()) {
-      this.player.stop();
-      this.setState({ playing: false });
-    } else {
-      this.player.start(this.state.unqSequence);
-      // this.player.start(this.state.unqSequence)
-      //   .then(() => this.setState({ playing: false }));
-    }
+    // if (this.player.isPlaying()) {
+    //   this.player.stop();
+    //   this.setState({ playing: false });
+    // } else {
+    //   this.player.start(this.state.unqSequence);
+    // }
+    Tone.Transport.toggle();
   }
 
   returnNote(note) {
-    // console.log(time.beg);
-    // console.log(time.end);
     let sequence = this.state.sequence;
-    console.log(note);
+    // console.log(note);
     sequence.push({
+      note: note.pitch,
       pitch: note.midi,
       startTime: (Tone.Transport.seconds.toFixed(2) - note.length).toFixed(2),
-      endTime: Tone.Transport.seconds.toFixed(2)
+      endTime: Tone.Transport.seconds.toFixed(2),
+      duration: note.length
     })
     this.setState({ sequence: sequence });
   }
@@ -137,7 +146,6 @@ class Pad extends Component {
     music_rnn.continueSequence(this.state.qSequence, 20, 1.5)
       .then((sample) => this.player.start(sample));
     // const qns = mm.sequences.quantizeNoteSequence(ORIGINAL_TWINKLE_TWINKLE, 4);
-
   }
 
   render() {
@@ -176,7 +184,7 @@ class Pad extends Component {
             </Grid>
             <Grid item sm={2}>
               <button className="synth-button" onClick={() => this.musicRNN()}>
-              <AddToQueue />
+                <AddToQueue />
               </button>
             </Grid>
           </Grid>
@@ -184,7 +192,6 @@ class Pad extends Component {
         <div className="canvas-container">
           <canvas id="canvas" />
         </div>
-
 
       </div>
     )
