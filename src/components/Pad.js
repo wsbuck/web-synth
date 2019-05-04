@@ -25,12 +25,14 @@ class Pad extends Component {
     };
     // this.player = new mm.Player();
     // this.player = new CustomPlayer();
+    this.music_rnn = new mm.MusicRNN('https://storage.googleapis.com/magentadata/js/checkpoints/music_rnn/basic_rnn');
 
     this.returnNote = this.returnNote.bind(this);
     this.isRecording = this.isRecording.bind(this);
     this.isPlaying = this.isPlaying.bind(this);
     this.quantizeNotes = this.quantizeNotes.bind(this);
     this.play = this.play.bind(this);
+    this.update_sequence = this.update_sequence.bind(this);
   }
 
   componentWillMount() {
@@ -51,6 +53,7 @@ class Pad extends Component {
       oscillator: this.oscillator,
       envelope: this.envelope
     });
+    this.music_rnn.initialize();
   }
 
   async isRecording(bool) {
@@ -87,7 +90,6 @@ class Pad extends Component {
     const { sequence } = this.state;
     let endTime = 0.0;
 
-
     sequence.forEach((note) => {
       if (note.endTime > endTime) {
         endTime = note.endTime;
@@ -118,6 +120,19 @@ class Pad extends Component {
     Tone.Transport.toggle();
   }
 
+  async update_sequence(mm_sequence) {
+    let sequence = mm_sequence;
+    sequence.map((note) => {
+      note.duration = note.endTime - note.startTime
+      note.note = Tone.Frequency(note.pitch, "midi").toNote()
+    })
+    console.log(sequence);
+
+    await this.setState({ sequence: sequence })
+    this.setupPlayer();
+
+  }
+
   returnNote(note) {
     let sequence = this.state.sequence;
     // console.log(note);
@@ -142,10 +157,11 @@ class Pad extends Component {
   }
 
   musicRNN() {
-    const music_rnn = new mm.MusicRNN('https://storage.googleapis.com/magentadata/js/checkpoints/music_rnn/basic_rnn');
-    music_rnn.initialize();
-    music_rnn.continueSequence(this.state.qSequence, 20, 1.5)
-      .then((sample) => this.player.start(sample));
+    this.music_rnn.continueSequence(this.state.qSequence, 20, 1.5)
+      // .then((sample) => this.player.start(sample));
+      .then((sample) => {
+        this.update_sequence(mm.sequences.unquantizeSequence(sample).notes)
+      });
     // const qns = mm.sequences.quantizeNoteSequence(ORIGINAL_TWINKLE_TWINKLE, 4);
   }
 
