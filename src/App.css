@@ -74,6 +74,16 @@ body {
   transform: translate(-50%, 0%);
 }
 
+.octave-container {
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.octave-radio-button {
+  padding: 7px !important;
+}
+
 .blink_text > * {
 
   animation:1s blinker linear infinite;

@@ -9,6 +9,7 @@ import * as mm from '@magenta/music';
 import SynthButton from './SynthButton';
 import PlaybackButton from './PlaybackButton';
 import RecordButton from './RecordButton';
+import OctaveControl from './OctaveControl';
 
 import { AddToQueue } from '@material-ui/icons';
 
@@ -19,7 +20,7 @@ class Pad extends Component {
       sequence: [],
       qSequence: null,
       unqSequence: null,
-      octave: 3,
+      octave: '3',
       recording: false,
       playing: false,
     };
@@ -28,6 +29,7 @@ class Pad extends Component {
     this.music_rnn = new mm.MusicRNN('https://storage.googleapis.com/magentadata/js/checkpoints/music_rnn/basic_rnn');
 
     this.returnNote = this.returnNote.bind(this);
+    this.returnOctave = this.returnOctave.bind(this);
     this.isRecording = this.isRecording.bind(this);
     this.isPlaying = this.isPlaying.bind(this);
     this.quantizeNotes = this.quantizeNotes.bind(this);
@@ -146,6 +148,10 @@ class Pad extends Component {
     this.setState({ sequence: sequence });
   }
 
+  returnOctave(octave) {
+    this.setState({ octave: octave });
+  }
+
   async quantizeNotes() {
     let { sequence } = this.state;
     const unquantizedSequence = {
@@ -209,6 +215,11 @@ class Pad extends Component {
         </div>
         <div className="canvas-container">
           <canvas id="canvas" />
+        </div>
+        <div className="octave-container">
+          <OctaveControl
+            returnOctave={this.returnOctave}
+            octave={this.state.octave} />
         </div>
 
       </div>
