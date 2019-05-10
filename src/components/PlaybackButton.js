@@ -22,6 +22,7 @@ class PlaybackButton extends Component {
       <div>
         <button
           onMouseDown={() => this.play()}
+          onTouchStart={() => this.play()}
           className={this.props.playing ? "synth-button pressed" : "synth-button"}
         >
         <PlayArrow />

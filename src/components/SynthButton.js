@@ -19,6 +19,20 @@ class SynthButton extends Component {
       oscillator: this.props.oscillator
     }).toMaster();
     this.startTime = null;
+    document.addEventListener("keydown", this.keyboardPress.bind(this));
+    document.addEventListener("keyup", this.keyboardUp.bind(this));
+  }
+
+  keyboardPress(e) {
+    if (e.key === this.props.keymap) {
+      this.playSynth(e);
+    }
+  }
+
+  keyboardUp(e) {
+    if (e.key === this.props.keymap) {
+      this.stopSynth(e);
+    }
   }
 
   playSynth(e) {
@@ -65,6 +79,8 @@ class SynthButton extends Component {
           onTouchEnd={(e) => this.stopSynth(e)}
           onMouseEnter={(e) => this.checkMouseDown(e)}
           onMouseLeave={(e) => this.stopSynth(e)}
+          // onKeyDown={(e) => {this.keyboardPress(e)}}
+          // onKeyUp={(e) => this.stopSynth(e)}
           className={this.state.pressed ? "synth-button pressed" : "synth-button"}
         />
       </div>

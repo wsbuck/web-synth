@@ -10,8 +10,10 @@ import SynthButton from './SynthButton';
 import PlaybackButton from './PlaybackButton';
 import RecordButton from './RecordButton';
 import OctaveControl from './OctaveControl';
+import MLButton from './MLButton';
 
-import { AddToQueue } from '@material-ui/icons';
+// import { AddToQueue } from '@material-ui/icons';
+
 
 class Pad extends Component {
   constructor(props) {
@@ -124,10 +126,11 @@ class Pad extends Component {
 
   async update_sequence(mm_sequence) {
     let sequence = mm_sequence;
-    sequence.map((note) => {
-      note.duration = note.endTime - note.startTime
-      note.note = Tone.Frequency(note.pitch, "midi").toNote()
-    })
+    sequence
+      .forEach((note) => {
+        note.duration = note.endTime - note.startTime
+        note.note = Tone.Frequency(note.pitch, "midi").toNote()
+      })
     console.log(sequence);
 
     await this.setState({ sequence: sequence })
@@ -178,16 +181,25 @@ class Pad extends Component {
       'C', 'C#', 'D', 'D#', 'E', 'F',
       'F#', 'G', 'G#', 'A', 'A#', 'B'
     ];
+    const keymaps = [
+      'a', 'w', 's', 'e', 'd', 'f', 't',
+      'j', 'i', 'k', 'o', 'l'
+    ];
     notes = notes.map(note => note + octave);
+
+    const notesAndKeys = notes.map((value, index) => {
+      return { note: value, keymap: keymaps[index] };
+    })
 
     return (
       <div>
         <div className="pad">
           <Grid container spacing={24} justify="center">
-            {notes.map((value, index) => (
+            {notesAndKeys.map((value, index) => (
               <Grid item sm={sm} key={index}>
                 <SynthButton
-                  note={value}
+                  note={value.note}
+                  keymap={value.keymap}
                   returnNote={this.returnNote}
                   evelope={this.envelope}
                   oscillator={this.oscillator}
@@ -207,9 +219,10 @@ class Pad extends Component {
               <RecordButton isRecording={this.isRecording} />
             </Grid>
             <Grid item sm={2}>
-              <button className="synth-button" onClick={() => this.musicRNN()}>
+              {/* <button className="synth-button" onClick={() => this.musicRNN()}>
                 <AddToQueue />
-              </button>
+              </button> */}
+              {/* <MLButton /> */}
             </Grid>
           </Grid>
         </div>

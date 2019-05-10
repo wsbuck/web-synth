@@ -25,6 +25,7 @@ class RecordButton extends Component {
       <div>
         <button
           onMouseDown={() => this.record()}
+          onTouchStart={() => this.record()}
           className={this.state.pressed ? "synth-button pressed blink_text" : "synth-button"}
         >
           <FiberManualRecord className="blink_texts" color="error" />
