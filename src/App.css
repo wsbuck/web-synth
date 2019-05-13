@@ -1,5 +1,6 @@
 body {
-  background-color: #34404e;
+  /* background-color: #34404e; */
+  background-color: #2d3142;
 }
 
 .App {
@@ -21,7 +22,8 @@ body {
   cursor: pointer;
   font-size: 35px;
   font-family: 'Roboto', sans-serif;
-  background-color:#F7F6EE;
+  /* background-color:#F7F6EE; */
+  background-color: #fcfcfc;
   border: none;
   border-radius: 4px;
   /* padding: 30px 50px; */
@@ -84,6 +86,19 @@ body {
 .octave-radio-button {
   padding: 7px !important;
 }
+
+.octave-radio-button-checked {
+  padding: 7px !important;
+}
+
+.octave-radio-button:active span {
+  color: #8FDCF1;
+}
+
+.octave-radio-button-checked span {
+  color: #8FDCF1;
+}
+
 
 .mlbutton {
   font-size: 20px;
