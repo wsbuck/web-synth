@@ -93,9 +93,13 @@ body {
   padding: 7px !important;
 }
 
-.octave-radio-button:active span {
-  color: #8FDCF1;
+.octave-radio-button span {
+  color: #fcfcfc;
 }
+
+/* .octave-radio-button:active span {
+  color: #8FDCF1;
+} */
 
 .octave-radio-button-checked span {
   color: #8FDCF1;
