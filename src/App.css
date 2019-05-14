@@ -66,11 +66,12 @@ body {
   justify-content: center;
   padding-top: 50px;
   width: 90%;
+  z-index: 2;
 }
 
 .canvas-container {
   position: fixed;
-  bottom: 20px;
+  bottom: 40px;
   width:  90%;
   margin: auto;
   left: 50%;
@@ -78,9 +79,10 @@ body {
 }
 
 .octave-container {
-  margin-top: 30px;
+  margin-top: 80px;
   margin-left: auto;
   margin-right: auto;
+  z-index: -1;
 }
 
 .octave-radio-button {

@@ -11,7 +11,8 @@ class RecordButton extends Component {
     };
   }
 
-  record() {
+  record(e) {
+    e.preventDefault();
     const {pressed} = this.state;
     this.props.isRecording(!pressed)
     this.setState({
@@ -24,8 +25,8 @@ class RecordButton extends Component {
     return (
       <div>
         <button
-          onMouseDown={() => this.record()}
-          onTouchStart={() => this.record()}
+          onMouseDown={(e) => this.record(e)}
+          onTouchEnd={(e) => this.record(e)}
           className={this.state.pressed ? "synth-button pressed blink_text" : "synth-button"}
         >
           <FiberManualRecord className="blink_texts" />

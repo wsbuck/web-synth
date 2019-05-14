@@ -42,7 +42,7 @@ function MLButton(props) {
     <div>
       <button
         onMouseDown={() => predict()}
-        onTouchStart={() => predict()}
+        onTouchEnd={() => predict()}
         className={pressed ? "synth-button mlbutton pressed" : "synth-button mlbutton"}
       >
       <i className="fas fa-brain"></i>

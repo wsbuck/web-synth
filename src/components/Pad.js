@@ -210,9 +210,9 @@ class Pad extends Component {
             </Grid>
           </Grid>
         </div>
-        <div className="canvas-container">
+        {/* <div className="canvas-container">
           <canvas id="canvas" />
-        </div>
+        </div> */}
         <div className="octave-container">
           <OctaveControl
             returnOctave={this.returnOctave}

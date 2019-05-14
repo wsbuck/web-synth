@@ -13,7 +13,8 @@ class PlaybackButton extends Component {
     };
   }
 
-  play() {
+  play(e) {
+    e.preventDefault();
     this.props.isPlaying();
   }
 
@@ -21,8 +22,8 @@ class PlaybackButton extends Component {
     return (
       <div>
         <button
-          onMouseDown={() => this.play()}
-          onTouchStart={() => this.play()}
+          onMouseDown={(e) => this.play(e)}
+          onTouchEnd={(e) => this.play(e)}
           className={this.props.playing ? "synth-button pressed" : "synth-button"}
         >
         <PlayArrow />
