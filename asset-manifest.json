@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/web-synth/static/css/main.d3998ddb.chunk.css",
+    "main.css": "/web-synth/static/css/main.5e02da27.chunk.css",
     "main.js": "/web-synth/static/js/main.c41b2a98.chunk.js",
     "main.js.map": "/web-synth/static/js/main.c41b2a98.chunk.js.map",
     "runtime~main.js": "/web-synth/static/js/runtime~main.1797bbe7.js",
@@ -8,8 +8,8 @@
     "static/js/2.0b2080c0.chunk.js": "/web-synth/static/js/2.0b2080c0.chunk.js",
     "static/js/2.0b2080c0.chunk.js.map": "/web-synth/static/js/2.0b2080c0.chunk.js.map",
     "index.html": "/web-synth/index.html",
-    "precache-manifest.0437fa4c8146763b05ab023583f1ebc0.js": "/web-synth/precache-manifest.0437fa4c8146763b05ab023583f1ebc0.js",
+    "precache-manifest.458f6fbbc9d7d22993dc2c4d966deafd.js": "/web-synth/precache-manifest.458f6fbbc9d7d22993dc2c4d966deafd.js",
     "service-worker.js": "/web-synth/service-worker.js",
-    "static/css/main.d3998ddb.chunk.css.map": "/web-synth/static/css/main.d3998ddb.chunk.css.map"
+    "static/css/main.5e02da27.chunk.css.map": "/web-synth/static/css/main.5e02da27.chunk.css.map"
   }
 }
