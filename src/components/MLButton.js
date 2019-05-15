@@ -41,6 +41,7 @@ function MLButton(props) {
   return (
     <div>
       <button
+        disabled={props.disabled}
         onMouseDown={() => predict()}
         onTouchEnd={() => predict()}
         className={pressed ? "synth-button mlbutton pressed" : "synth-button mlbutton"}

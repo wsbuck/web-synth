@@ -172,7 +172,12 @@ class Pad extends Component {
 
     const notesAndKeys = notes.map((value, index) => {
       return { note: value, keymap: keymaps[index] };
-    })
+    });
+
+    const ml_disabled = this.state.qSequence ? false : true;
+    const r_disabled = this.state.playing ? true : false;
+    const p_disabled = this.state.recording ? true: false;
+
 
     return (
       <div>
@@ -196,13 +201,21 @@ class Pad extends Component {
         <div className="playback-buttons">
           <Grid container spacing={24} justify="center">
             <Grid item sm={2}>
-              <PlaybackButton isPlaying={this.isPlaying} playing={this.state.playing} />
+              <PlaybackButton 
+                isPlaying={this.isPlaying} 
+                playing={this.state.playing} 
+                disabled={p_disabled}
+              />
             </Grid>
             <Grid item sm={2}>
-              <RecordButton isRecording={this.isRecording} />
+              <RecordButton 
+                isRecording={this.isRecording} 
+                disabled={r_disabled}
+              />
             </Grid>
             <Grid item sm={2}>
               <MLButton
+                disabled={ml_disabled}
                 qSequence={this.state.qSequence}
                 update_sequence={this.update_sequence}
                 clearTransportSchedule={this.clearTransportSchedule}

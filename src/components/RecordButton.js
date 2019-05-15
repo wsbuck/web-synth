@@ -25,6 +25,7 @@ class RecordButton extends Component {
     return (
       <div>
         <button
+          disabled={this.props.disabled}
           onMouseDown={(e) => this.record(e)}
           onTouchEnd={(e) => this.record(e)}
           className={this.state.pressed ? "synth-button pressed blink_text" : "synth-button"}

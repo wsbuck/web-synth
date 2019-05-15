@@ -22,6 +22,7 @@ class PlaybackButton extends Component {
     return (
       <div>
         <button
+          disabled={this.props.disabled}
           onMouseDown={(e) => this.play(e)}
           onTouchEnd={(e) => this.play(e)}
           className={this.props.playing ? "synth-button pressed" : "synth-button"}
